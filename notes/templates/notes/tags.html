@@ -1,0 +1,18 @@
+{% extends "notes/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="appbar">
+  <img src="{% static 'notes/img/logo-getit.png' %}" class="logo" />
+  <span class="subtitle">Como o Post-it, mas com outro verbo</span>
+</div>
+
+<main class="container">
+  <h2>Tags</h2>
+  <ul class="tag-list">
+    {% for tag in tags %}
+    <li><a class="card-action" href="{% url 'tag_detail' tag.id %}">{{ tag.name }}</a></li>
+    {% endfor %}
+  </ul>
+</main>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends "notes/base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="appbar">
+  <img src="{% static 'notes/img/logo-getit.png' %}" class="logo" />
+  <span class="subtitle">Como o Post-it, mas com outro verbo</span>
+</div>
+
+<main class="container">
+  <form class="form-card" method="post">
+    {% csrf_token %}
+    <input class="form-card-title" type="text" name="titulo" value="{{ note.title }}" />
+    <textarea class="autoresize" name="detalhes">{{ note.content }}</textarea>
+    <div class="form-card-actions">
+      <button class="btn" type="submit">Salvar</button>
+      <a class="btn btn-cancel" href="{% url 'index' %}">Cancelar</a>
+    </div>
+  </form>
+</main>
+{% endblock %}

@@ -264,3 +264,30 @@ textarea.autoresize{
   font-size: 13px;
   font-weight: bold;
 }
+
+.tag-list {
+  list-style: none;
+  padding: 0;
+}
+
+.tag-list li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+}
+
+.card-tag {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #4c4c4c;
+}
+
+.appbar-link {
+  margin-left: auto;
+  color: #4c4c4c;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.appbar-link:hover {
+  text-decoration: underline;
+}
