@@ -2,18 +2,23 @@ from django.shortcuts import render, redirect
 from .models import Note, Tag
 
 def get_tag_from_request(request):
-    tag_name = request.POST.get('tag', '').strip()
-    if not tag_name:
-        return None
-    tag, created = Tag.objects.get_or_create(name=tag_name)
-    return tag
+    tags_str = request.POST.get('tag', '').strip()
+    if not tags_str:
+        return []
+    tag_names = [t.strip() for t in tags_str.split(',') if t.strip()]
+    note_tags = []  
+    for name in tag_names:
+        tag, creates = Tag.objexts.get_or_create(name=name)
+        note_tags.append(tag)
+    return note_tags
 
 def index(request):
     if request.method == "POST":
         title = request.POST.get('titulo')
         content = request.POST.get('detalhes')
-        tag = get_tag_from_request(request)
-        Note.objects.create(title=title, content=content, tag=tag)
+        note = Note.objects.create(title=title, content=content)
+        note_tags = get_tag_from_request(request)
+        note.tags.set(note_tags)
         return redirect('index')
     else:
         all_notes = Note.objects.all()
@@ -29,8 +34,9 @@ def edit(request, note_id):
     if request.method == 'POST':
         note.title = request.POST.get('titulo')
         note.content = request.POST.get('detalhes')
-        note.tag = get_tag_from_request(request)
         note.save()
+        note_tags = get_tag_from_request(request)
+        note.tags.set(note_tags)
         return redirect('index')
     else:
         return render(request, 'notes/edit.html', {'note': note})

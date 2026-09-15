@@ -16,3 +16,7 @@ class Note(models.Model):
 
     def __str__(self):
         return f'{self.id}. {self.title}'
+
+    @property
+    def tags_display(self):
+        return ', '.join(tag.name for tag in self.tags.all())

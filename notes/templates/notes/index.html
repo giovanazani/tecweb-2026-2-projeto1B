@@ -13,7 +13,7 @@
     {% csrf_token %}
     <input class="form-card-title" type="text" name="titulo" placeholder="Título" />
     <textarea class="autoresize" name="detalhes" placeholder="Digite o conteúdo..."></textarea>
-    <input class="form-card-title" type="text" name="tag" placeholder="Tag (opcional)" />
+    <input class="form-card-title" type="text" name="tags" placeholder="Tags (opcional)" />
     <button class="btn" type="submit">Criar</button>
   </form>
 
@@ -23,7 +23,11 @@
       <h3 class="card-title">{{ note.title }}</h3>
       <div class="card-content">
         <p>{{ note.content }}</p>
-        {% if note.tag %}<p class="card-tag">#{{ note.tag.name }}</p>{% endif %}
+        {% if note.tags.all %}
+        <p class="card-tag">
+          {% for tag in note.tags.all %}#{{ tag.name }} {% endfor %}
+        </p>
+        {% endif %}
       </div>
       <a class="card-action" href="{% url 'edit' note.id %}">Editar</a>
       <a class="card-action" href="{% url 'delete' note.id %}">Apagar</a>
