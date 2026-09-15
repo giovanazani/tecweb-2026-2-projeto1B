@@ -2,13 +2,13 @@ from django.shortcuts import render, redirect
 from .models import Note, Tag
 
 def get_tag_from_request(request):
-    tags_str = request.POST.get('tag', '').strip()
+    tags_str = request.POST.get('tags', '').strip()
     if not tags_str:
         return []
     tag_names = [t.strip() for t in tags_str.split(',') if t.strip()]
-    note_tags = []  
+    note_tags = []
     for name in tag_names:
-        tag, creates = Tag.objexts.get_or_create(name=name)
+        tag, created = Tag.objects.get_or_create(name=name)
         note_tags.append(tag)
     return note_tags
 
@@ -47,5 +47,5 @@ def tags(request):
 
 def tag_detail(request, tag_id):
     tag = Tag.objects.get(pk=tag_id)
-    notes = Note.objects.filter(tag=tag)
+    notes = Note.objects.filter(tags=tag)
     return render(request, 'notes/tag_detail.html', {'tag':tag, 'notes':notes})
